@@ -1,0 +1,418 @@
+.__no-wrap {
+  flex-wrap: nowrap;
+
+  @media (max-width: 640px) {
+    margin-right: 0;
+    margin-left: 0;
+  }
+}
+
+.__general_transaction_info {
+  background: #fff;
+
+  @media (max-width: 640px) {
+    padding: 0;
+  }
+
+  @media (min-width: 640px) {
+    margin-right: 10px;
+  }
+}
+
+.__top_label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.__header_info {
+  padding: 12px 80px 12px 0;
+  background-color: #f4f4f9;
+
+  @media (max-width: 640px) {
+    padding: 12px 0;
+
+    .media-body {
+      flex: unset !important;
+    }
+  }
+
+  small {
+    color: #303392;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 17px;
+  }
+
+  img {
+    margin-bottom: 8px;
+  }
+
+  h3 {
+    color: #303392;
+    font-size: 17px;
+    font-weight: 500;
+    line-height: 16px;
+    text-transform: uppercase;
+  }
+}
+
+.__form_container {
+  min-height: 400px;
+  justify-content: space-between;
+
+  .__accounts_container {
+    overflow: visible;
+    max-height: initial;
+  }
+}
+
+.attachment-white {
+  color: white;
+}
+
+.oChat__header {
+  height: 99px;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+
+.__exchange_data {
+  flex-wrap: wrap;
+}
+
+.__exchange_rate {
+  width: 100%;
+  color: #303392;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 17px;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.__account_data {
+  position: relative;
+
+  .__account_index_n {
+    position: absolute;
+    width: 27px;
+    height: 27px;
+    top: 0;
+    bottom: 0;
+    left: -14px;
+    border-radius: 50px;
+    background-color: #f9ac58;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 400;
+    margin: auto;
+
+    @media (max-width: 640px) {
+      left: 0;
+      right: 0;
+      top: -14px;
+      bottom: auto;
+    }
+  }
+}
+
+.__l_account_title {
+  color: #303392;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.__l_account_number {
+  color: #303392;
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.__l_owner_data {
+  color: #303392;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.__timer {
+  span {
+    color: #303392;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 15px;
+  }
+}
+
+.__account_b_info {
+  padding-left: 23px !important;
+}
+
+.__pay_report_button {
+  padding: 0 8px;
+
+  label {
+    width: 100%;
+  }
+}
+
+.__l_deposit_value {
+  padding: 0 15px;
+  border-left: 1px solid #c9c9c9;
+  border-right: 1px solid #c9c9c9;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 75px;
+
+
+  @media (max-width: 640px) {
+    border-left: 0;
+    border-right: 0;
+  }
+
+  span {
+    color: #f0b149;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 19px;
+  }
+
+  strong {
+    color: #303392;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 26px;
+  }
+}
+
+.__payed_title {
+  display: block;
+  text-align: center;
+  padding: 8px 0;
+  color: #fff;
+  text-transform: uppercase;
+  background: #303392;
+}
+
+.__failed_bank_account {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  p {
+    text-align: center;
+    color: #f75828;
+    font-size: 15px;
+    font-weight: 400;
+  }
+}
+
+.__failed_title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #e24444;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: -0.3px;
+  line-height: 16px;
+  padding: 5px 25px;
+  border-radius: 12px;
+  border: 1px solid #e24444;
+}
+
+.__success_bank_account {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  p {
+    text-align: center;
+    color: #46be52;
+    font-size: 15px;
+    font-weight: 700;
+  }
+}
+
+.__success_title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #46be52;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.3px;
+  line-height: 16px;
+  padding: 5px 25px;
+  border-radius: 12px;
+  border: 1px solid #46be52;
+}
+
+.oChat {
+  position: sticky !important;
+
+
+  @media (max-width: 640px) {
+    height: 80vh;
+    max-height: initial;
+  }
+}
+
+.--announce {
+  display: flex;
+  justify-content: flex-start;
+
+  .oChat__item__msg {
+    background-color: #166192;
+    border-radius: 8px;
+    color: #fff;
+  }
+}
+
+.__switch_mobile {
+  position: sticky;
+  bottom: 0;
+  width: 100vw;
+  left: 0;
+  z-index: 1050;
+}
+
+.__flike_chat_btn {
+  border-radius: 200px;
+  position: fixed;
+  width: 65px;
+  height: 65px;
+  display: block;
+  top: 60vh;
+  bottom: 0;
+  right: -6px;
+  margin: auto;
+  z-index: 2500;
+  transition: all 0.20s ease-in-out;
+
+  .__talkAdvisor-icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: red;
+    color: #fff;
+    font-size: 10px;
+    border-radius: 50px;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  img {
+    border-radius: 200px;
+    width: 64px;
+    height: 64px;
+    border: 1px solid #fff;
+  }
+
+  .__talk_helper {
+    display: none;
+    position: absolute;
+    left: -190px;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    height: 15px;
+  }
+
+  &.__active {
+    right: 30px;
+    top: 20px;
+    margin: 0;
+
+    .__talk_helper {
+      display: block;
+    }
+  }
+
+  * {
+    pointer-events: none;
+  }
+
+  @media (min-width: 640px) {
+    display: none;
+  }
+}
+
+.__blackout {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 2450;
+}
+
+.__transaction_chat_mobile {
+  position: fixed;
+  z-index: 2480;
+  display: none;
+
+  &.__active {
+    top: 95px;
+    left: 0;
+    width: 100vw;
+
+    @media (min-width: 640px) {
+      display: none !important;
+    }
+  }
+
+  @media (min-width: 640px) {
+    display: none !important;
+  }
+
+  .oChat {
+    height: calc(100vh - 150px);
+    min-height: auto;
+  }
+}
+
+.__no_scroll {
+  overflow: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+.oChat__item__avatar {
+  width: 30px;
+  height: 30px;
+  top: -18px !important;
+  left: 14px !important;
+}
+
+@media (max-width: 640px) {
+  .card-body {
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+  }
+
+  .__accounts_counter {
+    padding: 0 1.5rem;
+  }
+
+  .__status_board {
+    height: auto !important;
+  }
+}

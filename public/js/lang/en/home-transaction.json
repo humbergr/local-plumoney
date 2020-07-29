@@ -1,0 +1,13 @@
+{
+  "send_money": "Send Money",
+  "send_money_text": "Send money wherever you want taking advantage of the benefits of the BlockChain network.",
+  "to_send": "Amount to send",
+  "to_receive": "Amount to receive",
+  "exchange_rate": "Exchange rate:",
+  "agreement_1": "I certify that I am of legal age and accept that this operation is governed by the",
+  "agreement_2": "user's agreement",
+  "agreement_3": "and the",
+  "agreement_4": "privacy policies.",
+  "sell_btc": "Sell your Bitcoins",
+  "buy_btc": "Buy Bitcoins"
+}

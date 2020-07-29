@@ -1,0 +1,603 @@
+.py-4 {
+  overflow: hidden;
+}
+
+.vzlaSaleUSD_image {
+  position: absolute;
+  right: -200vw;
+  margin: 1rem 0;
+  padding: 0;
+  border: 0;
+  background: #161559;
+
+  .saleCanvas {
+    width: 800px;
+    height: 800px;
+    padding-top: 29px;
+    background: url('/img/tools/images-export/background-exportImages.jpg') no-repeat center top / cover;
+  }
+
+  .head-1 {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    margin-bottom: 80px;
+    padding-right: 37px;
+
+    h3 {
+      display: flex;
+      align-items: flex-end;
+      margin: 0 49px 0 0;
+      font-family: 'Mukta', serif;
+      font-size: 72px;
+      font-weight: 300;
+      line-height: 1;
+      color: #fefefe;
+
+      justify-items: flex-end;
+    }
+
+    img {
+      width: 62px;
+      height: 59px;
+      margin-left: 25px;
+    }
+
+    .date {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 114px;
+      margin-bottom: 6px;
+      padding : 13px 0;
+      background-color: rgba(207, 206, 207, 0.26);
+
+      justify-items: center;
+
+      .month {
+        font-family: 'Mukta', serif;
+        font-size: 24px;
+        font-weight: 400;
+        line-height: 1;
+        color: #b0b0c1;
+      }
+
+      .n_day {
+        font-family: 'Poppins', serif;
+        font-size: 80px;
+        font-weight: 700;
+        line-height: 1;
+        color: #ffffff;
+      }
+
+      .n_year {
+        font-family: 'Mukta', serif;
+        font-size: 33px;
+        font-weight: 300;
+        line-height: 1;
+        color: #fffdfa;
+      }
+    }
+
+    .hour {
+      width: 114px;
+      background-color: rgba(207, 206, 207, 0.26);
+      text-align: center;
+
+      .n_hour {
+        font-family: 'Mukta', serif;
+        font-size: 27px;
+        font-weight: 300;
+        color: #fffdfa;
+        text-transform: uppercase;
+      }
+    }
+  }
+
+  .body {
+    .max-bank {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-left: 20px;
+    }
+
+    .max {
+      p {
+        width: 130px;
+        margin: 0;
+        font-family: 'Mukta', serif;
+        font-size: 25px;
+        font-weight: 700;
+        color: #f89300;
+        text-align: center;
+        text-transform: uppercase;
+      }
+    }
+
+    .bank {
+      img {
+        width: 205px;
+      }
+    }
+
+    .instant {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-top: 80px;
+      padding-left: 20px;
+
+      h4 {
+        margin: 0;
+        font-family: 'Poppins', serif;
+        font-size: 25px;
+        font-weight: 400;
+        line-height: 1;
+        color: #ffcd87;
+        text-transform: uppercase;
+      }
+
+      .money {
+        font-family: 'Poppins', serif;
+        font-size: 56px;
+        font-weight: 500;
+        line-height: 1;
+        color: #ffffff;
+
+        .small {
+          font-size: 38px;
+        }
+      }
+    }
+
+    .shipment {
+      margin-bottom: 12px;
+      text-align: right;
+
+      .helper {
+        padding-right: 40px;
+        font-family: 'Mukta', serif;
+        font-size: 15px;
+        font-weight: 400;
+        line-height: 14.49px;
+        color: #ffffff;
+      }
+
+      .background {
+        padding: 8px 40px 8px 0;
+        background: url('/img/tools/images-export/bk-shipment.png') no-repeat left top;
+      }
+
+      h4 {
+        margin: 0;
+        font-family: 'Poppins', serif;
+        font-size: 22px;
+        font-weight: 400;
+        line-height: 1;
+        color: #ffcd87;
+        text-transform: uppercase;
+      }
+
+      .money {
+        font-family: 'Poppins', serif;
+        font-size: 50px;
+        font-weight: 500;
+        line-height: 1;
+        color: #ffffff;
+
+        .small {
+          font-size: 35px;
+        }
+      }
+    }
+
+    .available {
+      padding-left: 20px;
+      font-family: 'Mukta', serif;
+      font-size: 20px;
+      font-weight: 400;
+      color: #ffffff;
+    }
+
+    .validity {
+      padding-right: 40px;
+      font-family: 'Mukta', serif;
+      font-size: 21px;
+      font-weight: 400;
+      color: #f89300;
+      text-align: right;
+    }
+  }
+
+  .footer {
+    padding-top: 20px;
+
+    li {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Mukta', serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: #ffffff;
+
+      img {
+        margin-right: 10px;
+      }
+    }
+  }
+}
+
+.vzlaBuyUSD_image {
+  position: absolute;
+  right: -200vw;
+  margin: 1rem 0;
+  padding: 0;
+  border: 0;
+  background: #161559;
+
+  .saleCanvas {
+    width: 800px;
+    height: 800px;
+    padding-top: 29px;
+    background: url('/img/tools/images-export/background-exportImages.jpg') no-repeat center top / cover;
+  }
+
+  .head-1 {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    margin-bottom: 80px;
+    padding-right: 37px;
+
+    h3 {
+      display: flex;
+      align-items: flex-end;
+      margin: 0 49px 0 0;
+      font-family: 'Mukta', serif;
+      font-size: 72px;
+      font-weight: 300;
+      line-height: 1;
+      color: #fefefe;
+
+      justify-items: flex-end;
+    }
+
+    img {
+      width: 62px;
+      height: 59px;
+      margin-left: 25px;
+    }
+
+    .date {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 114px;
+      margin-bottom: 6px;
+      padding : 13px 0;
+      background-color: rgba(207, 206, 207, 0.26);
+
+      justify-items: center;
+
+      .month {
+        font-family: 'Mukta', serif;
+        font-size: 24px;
+        font-weight: 400;
+        line-height: 1;
+        color: #b0b0c1;
+      }
+
+      .n_day {
+        font-family: 'Poppins', serif;
+        font-size: 80px;
+        font-weight: 700;
+        line-height: 1;
+        color: #ffffff;
+      }
+
+      .n_year {
+        font-family: 'Mukta', serif;
+        font-size: 33px;
+        font-weight: 300;
+        line-height: 1;
+        color: #fffdfa;
+      }
+    }
+
+    .hour {
+      width: 114px;
+      background-color: rgba(207, 206, 207, 0.26);
+      text-align: center;
+
+      .n_hour {
+        font-family: 'Mukta', serif;
+        font-size: 27px;
+        font-weight: 300;
+        color: #fffdfa;
+        text-transform: uppercase;
+      }
+    }
+  }
+
+  .body {
+    .max-1-2,
+    .max-3-4 {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 60px;
+      padding-left: 20px;
+    }
+
+    .max {
+      p {
+        width: 130px;
+        margin: 0;
+        font-family: 'Mukta', serif;
+        font-size: 24px;
+        color: #f89300;
+        text-align: center;
+        text-transform: uppercase;
+
+        .amount {
+          font-size: 40px;
+          font-weight: 700;
+        }
+      }
+    }
+
+    .shipment {
+      margin-bottom: 120px;
+      text-align: right;
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+
+      .helper {
+        padding-right: 40px;
+        font-family: 'Mukta', serif;
+        font-size: 15px;
+        font-weight: 400;
+        line-height: 14.49px;
+        color: #ffffff;
+      }
+
+      .background {
+        padding: 8px 40px 8px 0;
+        background: url('/img/tools/images-export/bk-shipment.png') no-repeat left top;
+      }
+
+      h4 {
+        margin: 0;
+        font-family: 'Poppins', serif;
+        font-size: 22px;
+        font-weight: 400;
+        line-height: 1;
+        color: #ffcd87;
+        text-transform: uppercase;
+      }
+
+      .money {
+        font-family: 'Poppins', serif;
+        font-size: 50px;
+        font-weight: 500;
+        line-height: 1;
+        color: #ffffff;
+
+        .small {
+          font-size: 35px;
+        }
+      }
+    }
+
+    .warning {
+      margin-bottom: 20px;
+      padding-left: 20px;
+      font-family: 'Poppins', serif;
+      font-size: 25px;
+      font-weight: 500;
+      line-height: 25.89px;
+      color: #ffcd87;
+    }
+
+    .available {
+      padding-left: 20px;
+      font-family: 'Mukta', serif;
+      font-size: 20px;
+      font-weight: 400;
+      color: #ffffff;
+    }
+
+    .validity {
+      padding-right: 40px;
+      font-family: 'Mukta', serif;
+      font-size: 21px;
+      font-weight: 400;
+      color: #f89300;
+      text-align: right;
+    }
+  }
+
+  .footer {
+    padding-top: 20px;
+
+    li {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Mukta', serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: #ffffff;
+
+      img {
+        margin-right: 10px;
+      }
+    }
+  }
+}
+
+.foreignDomImage {
+  position: absolute;
+  right: -200vw;
+  margin: 1rem 0;
+  padding: 0;
+  border: 0;
+  background: #161559;
+
+  .saleCanvas {
+    width: 800px;
+    height: 800px;
+    padding-top: 29px;
+    background: url('/img/tools/images-export/background-exportImages.jpg') no-repeat center top / cover;
+  }
+
+  .head-1 {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    margin-bottom: 80px;
+    padding-right: 37px;
+
+    h3 {
+      display: flex;
+      align-items: flex-end;
+      margin: 0 49px 0 0;
+      font-family: 'Mukta', serif;
+      font-size: 72px;
+      font-weight: 300;
+      line-height: 1;
+      color: #fefefe;
+
+      justify-items: flex-end;
+    }
+
+    img {
+      width: 62px;
+      height: 59px;
+      margin-left: 25px;
+    }
+
+    .date {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 114px;
+      margin-bottom: 6px;
+      padding : 13px 0;
+      background-color: rgba(207, 206, 207, 0.26);
+
+      justify-items: center;
+
+      .month {
+        font-family: 'Mukta', serif;
+        font-size: 24px;
+        font-weight: 400;
+        line-height: 1;
+        color: #b0b0c1;
+      }
+
+      .n_day {
+        font-family: 'Poppins', serif;
+        font-size: 80px;
+        font-weight: 700;
+        line-height: 1;
+        color: #ffffff;
+      }
+
+      .n_year {
+        font-family: 'Mukta', serif;
+        font-size: 33px;
+        font-weight: 300;
+        line-height: 1;
+        color: #fffdfa;
+      }
+    }
+
+    .hour {
+      width: 114px;
+      background-color: rgba(207, 206, 207, 0.26);
+      text-align: center;
+
+      .n_hour {
+        font-family: 'Mukta', serif;
+        font-size: 27px;
+        font-weight: 300;
+        color: #fffdfa;
+        text-transform: uppercase;
+      }
+    }
+  }
+
+  .body {
+    .information {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .money {
+        font-family: 'Poppins', serif;
+        font-size: 100px;
+        font-weight: 500;
+        color: #ffffff;
+      }
+
+      .origin {
+        margin-bottom: 2rem;
+        font-family: 'Mukta', serif;
+        font-size: 39px;
+        font-weight: 400;
+        color: #ffffff;
+        text-transform: uppercase;
+      }
+    }
+
+    .validity {
+      margin-bottom: 4rem;
+      padding-right: 40px;
+      font-family: 'Mukta', serif;
+      font-size: 21px;
+      font-weight: 400;
+      color: #f89300;
+      text-align: right;
+    }
+  }
+
+  .footer {
+    padding-top: 20px;
+
+    li {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Mukta', serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: #ffffff;
+
+      img {
+        margin-right: 10px;
+      }
+    }
+  }
+}
+
+.saleUsdModal,
+.buyUsdModal,
+.foreignOfferModal {
+  width: 600px;
+  height: 600px;
+  margin: auto;
+  padding: 10px;
+  background: #ffffff;
+
+  div {
+    canvas {
+      max-width: 580px;
+      max-height: 580px;
+    }
+  }
+}

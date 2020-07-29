@@ -1,0 +1,2009 @@
+@php
+    use Carbon\Carbon;
+@endphp
+
+@extends('layouts.mvp-layout-internal')
+
+@section('content')
+    <main class="dashboard__main"
+          style="padding: 24px; background: #f4f4f9">
+        <div class="container">
+            <div class="alert alert-warning rounded-lg px-3 py-2 mb-4">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <h6 class="text-primary mb-2 mb-md-0">Debes completar tu perfil de usuario para continuar</h6>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="progress mb-1 mb-md-0" style="height: 15px">
+                            <div class="progress-bar" role="progressbar"
+                                 style="width: {{$personProfile->progression()}}%; text-align: center"
+                                 aria-valuenow="{{$personProfile->progression()}}"
+                                 aria-valuemin="0"
+                                 aria-valuemax="100">
+                                {{$personProfile->progression()}}% completado
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="text-primary lh-125 font-13">Completa tu perfil para que puedas seguir haciendo uso
+                            de nuestros servicios.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <ul class="nav profileSettingsNav d-flex flex-row justify-content-center flex-nowrap mb-4">
+                <li class="nav-item">
+                    <a class="nav-link active" href="{{URL::to('/user-info')}}">
+                        <i class="fa fa-user" aria-hidden="true"></i> Información General
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{URL::to('/business-info')}}">
+                        <i class="fa fa-building-o" aria-hidden="true"></i> Perfil de Empresa
+                        @if($personProfile->selfie === null || $personProfile->street === null)
+                            <span class="badge badge-danger badge-pill float-right ml-2"
+                                  data-toggle="tooltip"
+                                  title="Para registrar un perfil de empresa primero debe haber llenado todos los campos en Informacion General e Información de Ubicación.">
+                                        <i class="fa fa-lock"></i>
+                                    </span>
+                        @endif
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{URL::to('/auth-config')}}">
+                        <i class="fa fa-qrcode" aria-hidden="true"></i> Two Factor Authentication
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"
+                       href="{{URL::to('/change-password')}}">
+                        <i class="fa fa-key" aria-hidden="true"></i> Contraseña
+                    </a>
+                </li>
+            </ul>
+            <div class="card shadow-none rounded-lg mb-4">
+                <div class="card-header pt-4 pb-1">
+                    <ul class="nav justify-content-center flex-nowrap mb-4 __rounded_pills">
+                        <li class="nav-item">
+                            <a id="__btn_personal_data"
+                               class="btn btn-outline-primary btn-pill px-4 mx-1 mx-md-2 font-mobile-14 lh-125 active"
+                               href="javascript:void(0);">
+                                Datos personales
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="__btn_personal_id_data"
+                               class="btn btn-outline-primary btn-pill px-4 mx-1 mx-md-2 font-mobile-14 lh-125"
+                               href="javascript:void(0);">
+                                Verificación de identidad
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 px-lg-5">
+                        @if($personProfile->approval_status === 0)
+                            <div class="alert alert-danger mb-4">
+                                <div class="media">
+                                    <img src="img/landing/danger-icon.svg" class="alert-icon mr-3">
+                                    <div class="media-body">
+                                        <h5 class="alert-heading">¡Atención!</h5>
+                                        Para utilizar nuestros servicios primero debe completar su perfil de
+                                        usuario. Por favor llene este formulario.
+                                    </div>
+                                </div>
+                            </div>
+                        @elseif ($personProfile->approval_status === 1)
+                            <div class="alert alert-warning mb-4">
+                                <div class="media">
+                                    <img src="img/landing/warning-icon.svg" class="alert-icon mr-3">
+                                    <div class="media-body">
+                                        <h5 class="alert-heading">¡Atención!</h5>
+                                        Su solicitud de aprobación de
+                                        perfil está siendo revisada por nuestro departamento de
+                                        cumplimiento de políticas AML y KYC.
+                                    </div>
+                                </div>
+                            </div>
+                        @elseif ($personProfile->approval_status === 3)
+                            <div class="alert alert-danger mb-4">
+                                <div class="media">
+                                    <img src="img/landing/danger-icon.svg" class="alert-icon mr-3">
+                                    <div class="media-body">
+                                        <h5 class="alert-heading">¡Atención!</h5>
+                                        Su perfil ha sido rechazado, por favor revise y actualice sus datos
+                                        o pongase en contacto con soporte.
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+                <form action="{{URL::to('/user-info')}}"
+                      enctype="multipart/form-data"
+                      method="post"
+                      class="px-lg-5"
+                      id="__personal_data_tab">
+                    {{ csrf_field() }}
+                    <div class="row">
+                        <div class="col-md-3 col-lg-3 col-xl-2">
+                            <div
+                                class="body-bg-color p-4 p-md-3 rounded-lg d-flex flex-row flex-md-column justify-content-start align-items-center text-md-center mb-4"
+                                style="padding: 0; min-height: 180px">
+                                <div class="__image_label mb-2"
+                                     @if ($personProfile->selfie !== null)
+                                     style="align-items: center"
+                                    @endif
+                                >
+                                    @if ($personProfile->selfie === null)
+                                        <img src="/img/landing/selfie-icon-2.svg"
+                                             alt="Upload selfie"
+                                             class="img-fluid"
+                                             style="max-height: 180px"
+                                             id="__selfie_img">
+                                    @else
+                                        <img src="{{$personProfile->selfie}}"
+                                             alt="Upload selfie"
+                                             style="max-height: 180px"
+                                             class="img-fluid"
+                                             id="__selfie_img">
+                                    @endif
+                                </div>
+                                <h6 class="text-primary font-18 font-weight-bold">Foto tipo selfie</h6>
+                                @if(($personProfile->approval_status !== 1 &&
+                                                            $personProfile->approval_status !== 2) ||
+                                                            $personProfile->selfie === null)
+                                    <a href="#" class="btn btn-light btn-sm"
+                                       data-toggle="modal"
+                                       data-target="#upload-avatar">
+                                        Cargar foto
+                                    </a>
+                                @endif
+                            </div>
+                        </div>
+                        @if(($personProfile->approval_status !== 1 &&
+                                                    $personProfile->approval_status !== 2) ||
+                                                    $personProfile->selfie === null)
+                            <div class="modal fade" id="upload-avatar" tabindex="-1" role="dialog"
+                                 aria-labelledby="upload-avatar-modal" aria-hidden="true">
+                                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h6 class="modal-title text-primary" id="upload-avatar-modal">Cargar
+                                                fotografía
+                                                tipo selfie</h6>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body pb-4">
+                                            <div class="row">
+                                                <div class="col-md-8">
+                                                    <div class="body-bg-color p-3 rounded-lg mb-3">
+                                                        <h6 class="text-primary">Ten en cuenta esto cuando cargues tu
+                                                            foto
+                                                            tipo selfie</h6>
+                                                        <ul class="text-primary font-14 lh-125 mb-0">
+                                                            <li>No usar sombrero ni nada que te cubra la cabeza.</li>
+                                                            <li>No usar lentes.</li>
+                                                            <li>Mostrar el rostro completo.</li>
+                                                            <li>Debe ser reciente.</li>
+                                                            <li>No debe estar pixelada.</li>
+                                                            <li>No debe estar borrosa.</li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="alert alert-warning font-14 lh-125 mb-0">
+                                                        <div class="media">
+                                                            <img src="/img/landing/warning-icon.svg"
+                                                                 class="alert-icon mr-3">
+                                                            <div class="media-body">
+                                                                Estos aspectos serán tomados en cuenta por el equipo de
+                                                                revisión y verificación a la hora de abrir tu cuenta con
+                                                                nosotros.
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div
+                                                        class="d-flex flex-row flex-md-column justify-content-start align-items-md-center text-md-center mt-4 mt-md-0">
+                                                        <div
+                                                            class="avatar-square-fluid avatar-background mr-3 mr-md-0 mb-md-3"
+                                                            style="padding: 0; min-height: 238px">
+                                                            <img src="/img/landing/selfie-icon-2.svg"
+                                                                 alt="Upload selfie"
+                                                                 class="img-fluid "
+                                                                 style="height: 100%; max-height: 238px"
+                                                                 id="__selfie_img_too">
+                                                        </div>
+                                                        <div class="flex-grow-1 mt-2">
+                                                            <h6 class="font-14">Foto tipo selfie</h6>
+                                                            <div class="font-12 text-muted">Max. 4mb.</div>
+                                                            <label class="btn btn-light btn-sm rounded-0">
+                                                                Seleccionar foto
+                                                                <input type="file"
+                                                                       class="form-control"
+                                                                       id="__selfie_input"
+                                                                       accept="image/*"
+                                                                       style="width: 0; height: 0; padding: 0;"
+                                                                       value="{{$personProfile->selfie}}"
+                                                                       name="UserPersonProfile[selfie]"
+                                                                       @if ($personProfile->selfie === null)
+                                                                       required
+                                                                    @endif>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer justify-content-between justify-content-md-end">
+                                            <a href="#" type="button"
+                                               class="btn btn-link text-muted btn-pill btn-sm px-3"
+                                               data-dismiss="modal"
+                                               style="color: #b3b3b3 !important;">
+                                                Cancelar
+                                            </a>
+                                            <a href="#" type="button" class="btn btn-primary btn-pill btn-sm px-3"
+                                               data-dismiss="modal">
+                                                Guardar cambios
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                        <div class="col-md-10">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label class="text-primary">Primer Nombre</label>
+                                        <input value="{{$personProfile->first_name}}" type="text"
+                                               class="form-control" placeholder="Escribe..."
+                                               name="UserPersonProfile[first_name]" readonly>
+                                        <input type="hidden" class="form-control"
+                                               value="{{$personProfile->id}}"
+                                               name="UserPersonProfile[id]">
+                                        <input type="hidden" class="form-control"
+                                               value="{{Auth::user()->id}}"
+                                               id="__u_user_id"
+                                               name="User[id]">
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label class="text-primary">Segundo Nombre</label>
+                                        <input type="text" class="form-control"
+                                               value="{{$personProfile->second_name}}"
+                                               name="UserPersonProfile[second_name]"
+                                               id="__u_second_name"
+                                               {{ $personProfile->approval_status === 1 ||
+                                                 $personProfile->approval_status === 2 ? 'readonly' : ' required' }}
+                                               placeholder="Escribe...">
+                                        @if($personProfile->second_name === null)
+                                            <span id="__no_second_name"
+                                                  class="text-danger d-block"
+                                                  style="cursor: pointer; font-size: 11px">
+                                                ¿Sin segundo nombre? Haz click aquí.
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label class="text-primary">Primer Apellido</label>
+                                        <input type="text" class="form-control" placeholder="Escribe..."
+                                               value="{{$personProfile->last_name}}"
+                                               readonly
+                                               name="UserPersonProfile[last_name]">
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label class="text-primary">Segundo Apellido</label>
+                                        <input type="text" class="form-control" placeholder="Escribe..."
+                                               value="{{$personProfile->second_last_name}}"
+                                               name="UserPersonProfile[second_last_name]"
+                                               id="__u_second_last_name"
+                                            {{ $personProfile->approval_status === 1 ||
+                                              $personProfile->approval_status === 2 ? 'readonly' : 'required' }}>
+                                        @if($personProfile->second_last_name === null)
+                                            <span id="__no_second_last_name"
+                                                  class="text-danger d-block"
+                                                  style="cursor: pointer; font-size: 11px">
+                                                ¿Sin segundo apellido? Haz click aquí.
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 col-lg-3">
+                                    <div class="form-group">
+                                        @php
+                                            $birthValue = $personProfile->birth_year . '-'
+                                                . $personProfile->birth_month . '-' . $personProfile->birth_day;
+                                        @endphp
+                                        <label class="text-primary">Fecha de nacimiento</label>
+                                        <input type="date" class="form-control"
+                                               value="{{$birthValue}}"
+                                               name="UserPersonProfile[full_birth]"
+                                               placeholder="Escribe..."
+                                            {{ $personProfile->approval_status === 1 ||
+                                                  $personProfile->approval_status === 2 ? 'readonly' : '' }}>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-lg-3">
+                                    <div class="form-group">
+                                        <label class="text-primary">Email</label>
+                                        <input type="email" class="form-control"
+                                               value="{{$personProfile->email}}"
+                                               name="UserPersonProfile[email]"
+                                               readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-lg-3">
+                                    <div class="form-group">
+                                        <label class="text-primary">Teléfono Célular</label>
+                                        <div class="input-group">
+                                            @php
+                                                $mobileNumber = explode(' ', $personProfile->mobile);
+                                            @endphp
+                                            {{-- || $personProfile->approval_status === 1 || --}}
+                                            {{-- $personProfile->approval_status === 2 --}}
+                                            <input name="UserPersonProfile[pre-mobile]"
+                                                   id="__u_mobile_prefix"
+                                                   type="hidden"
+                                                   value="{{$mobileNumber[0] !== '' ? $mobileNumber[0] : '+1'}}"
+                                                   required
+                                                {{ $personProfile->mobile !== null ? 'readonly disabled' : '' }}>
+                                            <input type="text"
+                                                   class="form-control"
+                                                   id="__u_mobile_main"
+                                                   value="{{$mobileNumber[1] ?? ''}}"
+                                                   name="UserPersonProfile[main-mobile]"
+                                                   required
+                                                {{ $personProfile->mobile !== null ? 'readonly disabled' : '' }}>
+                                        </div>
+                                    </div>
+                                    @if($personProfile->mobile_verified === 0)
+                                        <a href="javascript:void(0)"
+                                           class="btn btn-danger small mb-2 form-text"
+                                           style="font-size: 12px"
+                                           id="__verify_phone_button"
+                                           data-toggle="modal"
+                                           data-target="#verify-phone">
+                                            <i class="fa fa-warning"></i>
+                                            Debes verificar tu número.
+                                            <br>
+                                            Haz click aquí.
+                                        </a>
+                                        <p id="__verified_phone"
+                                           class="text-success text-right small form-text d-none">
+                                            Número verificado con éxito.
+                                        </p>
+                                    @else
+                                        <p id="__verified_phone"
+                                           class="text-success text-right small form-text">
+                                            Número verificado con éxito.
+                                        </p>
+                                    @endif
+                                </div>
+                                <div class="col-md-4 col-lg-3">
+                                    <div class="form-group">
+                                        <label class="text-primary">Teléfono Fijo</label>
+                                        <div class="input-group">
+                                            @php
+                                                $localNumber = explode(' ', $personProfile->local_phone);
+                                            @endphp
+                                            <input name="UserPersonProfile[pre-local]"
+                                                   id="__u_local_prefix"
+                                                   type="hidden"
+                                                   value="{{$localNumber[0] !== '' ? $localNumber[0] : '+1'}}"
+                                                   required
+                                                {{ $personProfile->approval_status === 1 ||
+                                                $personProfile->approval_status === 2 ? 'readonly disabled' : '' }}>
+                                            <input type="text"
+                                                   class="form-control"
+                                                   id="__u_local_main"
+                                                   value="{{$localNumber[1] ?? ''}}"
+                                                   name="UserPersonProfile[main-local]"
+                                                   required
+                                                {{ $personProfile->approval_status === 1 ||
+                                                $personProfile->approval_status === 2 ? 'readonly disabled' : '' }}>
+                                            @if(!isset($localNumber[1]))
+                                                <span id="__no_main_local"
+                                                      class="text-danger d-block"
+                                                      style="cursor: pointer; font-size: 11px">
+                                                    ¿Sin teléfono fijo? Haz click aquí.
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 col-lg-3">
+                                    <div class="form-group">
+                                        <label class="text-primary">Pais</label>
+                                        <select name="UserPersonProfile[country]"
+                                                id="person-select-country"
+                                                required
+                                            {{ $personProfile->approval_status === 1 ||
+                                               $personProfile->approval_status === 2 ? 'disabled' : '' }}>
+                                            <option value="" selected></option>
+                                            <option
+                                                {{ $personProfile->country === 'AD' ? 'selected':'' }}
+                                                value="AD">Andorra
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'AE' ? 'selected':'' }}
+                                                value="AE">Emiratos Árabes Unidos
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'AF' ? 'selected':'' }}
+                                                value="AF">Afganistán
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'AG' ? 'selected':'' }}
+                                                value="AG">Antigua y Barbuda
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'AI' ? 'selected':'' }}
+                                                value="AI">Anguila
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'AL' ? 'selected':'' }}
+                                                value="AL">Albania
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'AM' ? 'selected':'' }}
+                                                value="AM">Armenia
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'AO' ? 'selected':'' }}
+                                                value="AO">Angola
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'AQ' ? 'selected':'' }}
+                                                value="AQ">Antártida
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'AR' ? 'selected':'' }}
+                                                value="AR">Argentina
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'AS' ? 'selected':'' }}
+                                                value="AS">Samoa Americana
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'AT' ? 'selected':'' }}
+                                                value="AT">Austria
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'AU' ? 'selected':'' }}
+                                                value="AU">Australia
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'AW' ? 'selected':'' }}
+                                                value="AW">Aruba
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'AX' ? 'selected':'' }}
+                                                value="AX">Islas Áland
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'AZ' ? 'selected':'' }}
+                                                value="AZ">Azerbaiyán
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'BA' ? 'selected':'' }}
+                                                value="BA">Bosnia y Herzegovina
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'BB' ? 'selected':'' }}
+                                                value="BB">Barbados
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'BD' ? 'selected':'' }}
+                                                value="BD">Bangladesh
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'BE' ? 'selected':'' }}
+                                                value="BE">Bélgica
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'BF' ? 'selected':'' }}
+                                                value="BF">Burkina Faso
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'BG' ? 'selected':'' }}
+                                                value="BG">Bulgaria
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'BH' ? 'selected':'' }}
+                                                value="BH">Bahréin
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'BI' ? 'selected':'' }}
+                                                value="BI">Burundi
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'BJ' ? 'selected':'' }}
+                                                value="BJ">Benin
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'BL' ? 'selected':'' }}
+                                                value="BL">San Bartolomé
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'BM' ? 'selected':'' }}
+                                                value="BM">Bermudas
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'BN' ? 'selected':'' }}
+                                                value="BN">Brunéi
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'BO' ? 'selected':'' }}
+                                                value="BO">Bolivia
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'BR' ? 'selected':'' }}
+                                                value="BR">Brasil
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'BS' ? 'selected':'' }}
+                                                value="BS">Bahamas
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'BT' ? 'selected':'' }}
+                                                value="BT">Bhután
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'BV' ? 'selected':'' }}
+                                                value="BV">Isla Bouvet
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'BW' ? 'selected':'' }}
+                                                value="BW">Botsuana
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'BY' ? 'selected':'' }}
+                                                value="BY">Belarús
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'BZ' ? 'selected':'' }}
+                                                value="BZ">Belice
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'CA' ? 'selected':'' }}
+                                                value="CA">Canadá
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'CC' ? 'selected':'' }}
+                                                value="CC">Islas Cocos
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'CF' ? 'selected':'' }}
+                                                value="CF">República Centro-Africana
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'CG' ? 'selected':'' }}
+                                                value="CG">Congo
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'CH' ? 'selected':'' }}
+                                                value="CH">Suiza
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'CI' ? 'selected':'' }}
+                                                value="CI">Costa de Marfil
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'CK' ? 'selected':'' }}
+                                                value="CK">Islas Cook
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'CL' ? 'selected':'' }}
+                                                value="CL">Chile
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'CM' ? 'selected':'' }}
+                                                value="CM">Camerún
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'CN' ? 'selected':'' }}
+                                                value="CN">China
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'CO' ? 'selected':'' }}
+                                                value="CO">Colombia
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'CR' ? 'selected':'' }}
+                                                value="CR">Costa Rica
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'CU' ? 'selected':'' }}
+                                                value="CU">Cuba
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'CV' ? 'selected':'' }}
+                                                value="CV">Cabo Verde
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'CX' ? 'selected':'' }}
+                                                value="CX">Islas Christmas
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'CY' ? 'selected':'' }}
+                                                value="CY">Chipre
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'CZ' ? 'selected':'' }}
+                                                value="CZ">República Checa
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'DE' ? 'selected':'' }}
+                                                value="DE">Alemania
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'DJ' ? 'selected':'' }}
+                                                value="DJ">Yibuti
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'DK' ? 'selected':'' }}
+                                                value="DK">Dinamarca
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'DM' ? 'selected':'' }}
+                                                value="DM">Domínica
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'DO' ? 'selected':'' }}
+                                                value="DO">República Dominicana
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'DZ' ? 'selected':'' }}
+                                                value="DZ">Argel
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'EC' ? 'selected':'' }}
+                                                value="EC">Ecuador
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'EE' ? 'selected':'' }}
+                                                value="EE">Estonia
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'EG' ? 'selected':'' }}
+                                                value="EG">Egipto
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'EH' ? 'selected':'' }}
+                                                value="EH">Sahara Occidental
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'ER' ? 'selected':'' }}
+                                                value="ER">Eritrea
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'ES' ? 'selected':'' }}
+                                                value="ES">España
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'ET' ? 'selected':'' }}
+                                                value="ET">Etiopía
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'FI' ? 'selected':'' }}
+                                                value="FI">Finlandia
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'FJ' ? 'selected':'' }}
+                                                value="FJ">Fiji
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'FK' ? 'selected':'' }}
+                                                value="FK">Islas Malvinas
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'FM' ? 'selected':'' }}
+                                                value="FM">Micronesia
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'FO' ? 'selected':'' }}
+                                                value="FO">Islas Faroe
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'FR' ? 'selected':'' }}
+                                                value="FR">Francia
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'GA' ? 'selected':'' }}
+                                                value="GA">Gabón
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'GB' ? 'selected':'' }}
+                                                value="GB">Reino Unido
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'GD' ? 'selected':'' }}
+                                                value="GD">Granada
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'GE' ? 'selected':'' }}
+                                                value="GE">Georgia
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'GF' ? 'selected':'' }}
+                                                value="GF">Guayana Francesa
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'GG' ? 'selected':'' }}
+                                                value="GG">Guernsey
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'GH' ? 'selected':'' }}
+                                                value="GH">Ghana
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'GI' ? 'selected':'' }}
+                                                value="GI">Gibraltar
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'GL' ? 'selected':'' }}
+                                                value="GL">Groenlandia
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'GM' ? 'selected':'' }}
+                                                value="GM">Gambia
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'GN' ? 'selected':'' }}
+                                                value="GN">Guinea
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'GP' ? 'selected':'' }}
+                                                value="GP">Guadalupe
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'GQ' ? 'selected':'' }}
+                                                value="GQ">Guinea Ecuatorial
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'GR' ? 'selected':'' }}
+                                                value="GR">Grecia
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'GS' ? 'selected':'' }}
+                                                value="GS">Georgia del Sur e Islas Sandwich del Sur
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'GT' ? 'selected':'' }}
+                                                value="GT">Guatemala
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'GU' ? 'selected':'' }}
+                                                value="GU">Guam
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'GW' ? 'selected':'' }}
+                                                value="GW">Guinea-Bissau
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'GY' ? 'selected':'' }}
+                                                value="GY">Guayana
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'HK' ? 'selected':'' }}
+                                                value="HK">Hong Kong
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'HM' ? 'selected':'' }}
+                                                value="HM">Islas Heard y McDonald
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'HN' ? 'selected':'' }}
+                                                value="HN">Honduras
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'HR' ? 'selected':'' }}
+                                                value="HR">Croacia
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'HT' ? 'selected':'' }}
+                                                value="HT">Haití
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'HU' ? 'selected':'' }}
+                                                value="HU">Hungría
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'ID' ? 'selected':'' }}
+                                                value="ID">Indonesia
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'IE' ? 'selected':'' }}
+                                                value="IE">Irlanda
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'IL' ? 'selected':'' }}
+                                                value="IL">Israel
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'IM' ? 'selected':'' }}
+                                                value="IM">Isla de Man
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'IN' ? 'selected':'' }}
+                                                value="IN">India
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'IO' ? 'selected':'' }}
+                                                value="IO">Territorio Británico del Océano Índico
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'IQ' ? 'selected':'' }}
+                                                value="IQ">Irak
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'IR' ? 'selected':'' }}
+                                                value="IR">Irán
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'IS' ? 'selected':'' }}
+                                                value="IS">Islandia
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'IT' ? 'selected':'' }}
+                                                value="IT">Italia
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'JE' ? 'selected':'' }}
+                                                value="JE">Jersey
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'JM' ? 'selected':'' }}
+                                                value="JM">Jamaica
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'JO' ? 'selected':'' }}
+                                                value="JO">Jordania
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'JP' ? 'selected':'' }}
+                                                value="JP">Japón
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'KE' ? 'selected':'' }}
+                                                value="KE">Kenia
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'KG' ? 'selected':'' }}
+                                                value="KG">Kirguistán
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'KH' ? 'selected':'' }}
+                                                value="KH">Camboya
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'KI' ? 'selected':'' }}
+                                                value="KI">Kiribati
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'KM' ? 'selected':'' }}
+                                                value="KM">Comoros
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'KN' ? 'selected':'' }}
+                                                value="KN">San Cristóbal y Nieves
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'KP' ? 'selected':'' }}
+                                                value="KP">Corea del Norte
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'KR' ? 'selected':'' }}
+                                                value="KR">Corea del Sur
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'KW' ? 'selected':'' }}
+                                                value="KW">Kuwait
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'KY' ? 'selected':'' }}
+                                                value="KY">Islas Caimán
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'KZ' ? 'selected':'' }}
+                                                value="KZ">Kazajstán
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'LA' ? 'selected':'' }}
+                                                value="LA">Laos
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'LB' ? 'selected':'' }}
+                                                value="LB">Líbano
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'LC' ? 'selected':'' }}
+                                                value="LC">Santa Lucía
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'LI' ? 'selected':'' }}
+                                                value="LI">Liechtenstein
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'LK' ? 'selected':'' }}
+                                                value="LK">Sri Lanka
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'LR' ? 'selected':'' }}
+                                                value="LR">Liberia
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'LS' ? 'selected':'' }}
+                                                value="LS">Lesotho
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'LT' ? 'selected':'' }}
+                                                value="LT">Lituania
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'LU' ? 'selected':'' }}
+                                                value="LU">Luxemburgo
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'LV' ? 'selected':'' }}
+                                                value="LV">Letonia
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'LY' ? 'selected':'' }}
+                                                value="LY">Libia
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'MA' ? 'selected':'' }}
+                                                value="MA">Marruecos
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'MC' ? 'selected':'' }}
+                                                value="MC">Mónaco
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'MD' ? 'selected':'' }}
+                                                value="MD">Moldova
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'ME' ? 'selected':'' }}
+                                                value="ME">Montenegro
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'MG' ? 'selected':'' }}
+                                                value="MG">Madagascar
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'MH' ? 'selected':'' }}
+                                                value="MH">Islas Marshall
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'MK' ? 'selected':'' }}
+                                                value="MK">Macedonia
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'ML' ? 'selected':'' }}
+                                                value="ML">Mali
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'MM' ? 'selected':'' }}
+                                                value="MM">Myanmar
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'MN' ? 'selected':'' }}
+                                                value="MN">Mongolia
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'MO' ? 'selected':'' }}
+                                                value="MO">Macao
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'MQ' ? 'selected':'' }}
+                                                value="MQ">Martinica
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'MR' ? 'selected':'' }}
+                                                value="MR">Mauritania
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'MS' ? 'selected':'' }}
+                                                value="MS">Montserrat
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'MT' ? 'selected':'' }}
+                                                value="MT">Malta
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'MU' ? 'selected':'' }}
+                                                value="MU">Mauricio
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'MV' ? 'selected':'' }}
+                                                value="MV">Maldivas
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'MW' ? 'selected':'' }}
+                                                value="MW">Malawi
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'MX' ? 'selected':'' }}
+                                                value="MX">México
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'MY' ? 'selected':'' }}
+                                                value="MY">Malasia
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'MZ' ? 'selected':'' }}
+                                                value="MZ">Mozambique
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'NA' ? 'selected':'' }}
+                                                value="NA">Namibia
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'NC' ? 'selected':'' }}
+                                                value="NC">Nueva Caledonia
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'NE' ? 'selected':'' }}
+                                                value="NE">Níger
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'NF' ? 'selected':'' }}
+                                                value="NF">Islas Norkfolk
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'NG' ? 'selected':'' }}
+                                                value="NG">Nigeria
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'NI' ? 'selected':'' }}
+                                                value="NI">Nicaragua
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'NL' ? 'selected':'' }}
+                                                value="NL">Países Bajos
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'NO' ? 'selected':'' }}
+                                                value="NO">Noruega
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'NP' ? 'selected':'' }}
+                                                value="NP">Nepal
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'NR' ? 'selected':'' }}
+                                                value="NR">Nauru
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'NU' ? 'selected':'' }}
+                                                value="NU">Niue
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'NZ' ? 'selected':'' }}
+                                                value="NZ">Nueva Zelanda
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'OM' ? 'selected':'' }}
+                                                value="OM">Omán
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'PA' ? 'selected':'' }}
+                                                value="PA">Panamá
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'PE' ? 'selected':'' }}
+                                                value="PE">Perú
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'PF' ? 'selected':'' }}
+                                                value="PF">Polinesia Francesa
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'PG' ? 'selected':'' }}
+                                                value="PG">Papúa Nueva Guinea
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'PH' ? 'selected':'' }}
+                                                value="PH">Filipinas
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'PK' ? 'selected':'' }}
+                                                value="PK">Pakistán
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'PL' ? 'selected':'' }}
+                                                value="PL">Polonia
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'PM' ? 'selected':'' }}
+                                                value="PM">San Pedro y Miquelón
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'PN' ? 'selected':'' }}
+                                                value="PN">Islas Pitcairn
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'PR' ? 'selected':'' }}
+                                                value="PR">Puerto Rico
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'PS' ? 'selected':'' }}
+                                                value="PS">Palestina
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'PT' ? 'selected':'' }}
+                                                value="PT">Portugal
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'PW' ? 'selected':'' }}
+                                                value="PW">Islas Palaos
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'PY' ? 'selected':'' }}
+                                                value="PY">Paraguay
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'QA' ? 'selected':'' }}
+                                                value="QA">Qatar
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'RE' ? 'selected':'' }}
+                                                value="RE">Reunión
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'RO' ? 'selected':'' }}
+                                                value="RO">Rumanía
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'RS' ? 'selected':'' }}
+                                                value="RS">Serbia y Montenegro
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'RU' ? 'selected':'' }}
+                                                value="RU">Rusia
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'RW' ? 'selected':'' }}
+                                                value="RW">Ruanda
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'SA' ? 'selected':'' }}
+                                                value="SA">Arabia Saudita
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'SB' ? 'selected':'' }}
+                                                value="SB">Islas Solomón
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'SC' ? 'selected':'' }}
+                                                value="SC">Seychelles
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'SD' ? 'selected':'' }}
+                                                value="SD">Sudán
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'SE' ? 'selected':'' }}
+                                                value="SE">Suecia
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'SG' ? 'selected':'' }}
+                                                value="SG">Singapur
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'SH' ? 'selected':'' }}
+                                                value="SH">Santa Elena
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'SI' ? 'selected':'' }}
+                                                value="SI">Eslovenia
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'SJ' ? 'selected':'' }}
+                                                value="SJ">Islas Svalbard y Jan Mayen
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'SK' ? 'selected':'' }}
+                                                value="SK">Eslovaquia
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'SL' ? 'selected':'' }}
+                                                value="SL">Sierra Leona
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'SM' ? 'selected':'' }}
+                                                value="SM">San Marino
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'SN' ? 'selected':'' }}
+                                                value="SN">Senegal
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'SO' ? 'selected':'' }}
+                                                value="SO">Somalia
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'SR' ? 'selected':'' }}
+                                                value="SR">Surinam
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'ST' ? 'selected':'' }}
+                                                value="ST">Santo Tomé y Príncipe
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'SV' ? 'selected':'' }}
+                                                value="SV">El Salvador
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'SY' ? 'selected':'' }}
+                                                value="SY">Siria
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'SZ' ? 'selected':'' }}
+                                                value="SZ">Suazilandia
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'TC' ? 'selected':'' }}
+                                                value="TC">Islas Turcas y Caicos
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'TD' ? 'selected':'' }}
+                                                value="TD">Chad
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'TF' ? 'selected':'' }}
+                                                value="TF">Territorios Australes Franceses
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'TG' ? 'selected':'' }}
+                                                value="TG">Togo
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'TH' ? 'selected':'' }}
+                                                value="TH">Tailandia
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'TH' ? 'selected':'' }}
+                                                value="TH">Tanzania
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'TJ' ? 'selected':'' }}
+                                                value="TJ">Tayikistán
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'TK' ? 'selected':'' }}
+                                                value="TK">Tokelau
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'TL' ? 'selected':'' }}
+                                                value="TL">Timor-Leste
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'TM' ? 'selected':'' }}
+                                                value="TM">Turkmenistán
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'TN' ? 'selected':'' }}
+                                                value="TN">Túnez
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'TO' ? 'selected':'' }}
+                                                value="TO">Tonga
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'TR' ? 'selected':'' }}
+                                                value="TR">Turquía
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'TT' ? 'selected':'' }}
+                                                value="TT">Trinidad y Tobago
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'TV' ? 'selected':'' }}
+                                                value="TV">Tuvalu
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'TW' ? 'selected':'' }}
+                                                value="TW">Taiwán
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'UA' ? 'selected':'' }}
+                                                value="UA">Ucrania
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'UG' ? 'selected':'' }}
+                                                value="UG">Uganda
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'US' ? 'selected':'' }}
+                                                value="US">Estados Unidos de América
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'UY' ? 'selected':'' }}
+                                                value="UY">Uruguay
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'UZ' ? 'selected':'' }}
+                                                value="UZ">Uzbekistán
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'VA' ? 'selected':'' }}
+                                                value="VA">Ciudad del Vaticano
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'VC' ? 'selected':'' }}
+                                                value="VC">San Vicente y las Granadinas
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'VE' ? 'selected':'' }}
+                                                value="VE">Venezuela
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'VG' ? 'selected':'' }}
+                                                value="VG">Islas Vírgenes Británicas
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'VI' ? 'selected':'' }}
+                                                value="VI">Islas Vírgenes de los Estados Unidos de América
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'VN' ? 'selected':'' }}
+                                                value="VN">Vietnam
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'VU' ? 'selected':'' }}
+                                                value="VU">Vanuatu
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'WF' ? 'selected':'' }}
+                                                value="WF">Wallis y Futuna
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'WS' ? 'selected':'' }}
+                                                value="WS">Samoa
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'YE' ? 'selected':'' }}
+                                                value="YE">Yemen
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'YT' ? 'selected':'' }}
+                                                value="YT">Mayotte
+                                            </option>
+                                            <option
+                                                {{ $personProfile->country === 'ZA' ? 'selected':'' }}
+                                                value="ZA">Sudáfrica
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-lg-3">
+                                    <div class="form-group">
+                                        <label class="text-primary">Estado / Departamento</label>
+                                        <input type="text" class="form-control"
+                                               value="{{$personProfile->state}}"
+                                               name="UserPersonProfile[state]" required
+                                            {{ $personProfile->approval_status === 1 ||
+                                     $personProfile->approval_status === 2 ? 'readonly' : '' }}>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-lg-3">
+                                    <div class="form-group">
+                                        <label class="text-primary">Ciudad</label>
+                                        <input id="person-ciudad" type="text" class="form-control"
+                                               value="{{$personProfile->city}}"
+                                               name="UserPersonProfile[city]" required
+                                            {{ $personProfile->approval_status === 1 ||
+                                            $personProfile->approval_status === 2 ? 'readonly' : '' }}>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-lg-3">
+                                    <div class="form-group">
+                                        <label class="text-primary">Código Postal</label>
+                                        <input id="person-codigo-postal"
+                                               type="text"
+                                               class="form-control"
+                                               value="{{$personProfile->zip_code}}"
+                                               name="UserPersonProfile[zip_code]" required
+                                            {{ $personProfile->approval_status === 1 ||
+                                            $personProfile->approval_status === 2 ? 'readonly' : '' }}>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-8 col-lg-5">
+                                    <div class="form-group">
+                                        <label class="text-primary">Dirección de Domicilio, Avenida, Calle, Edif o
+                                            Casa</label>
+                                        <input id="person-direccion"
+                                               name="UserPersonProfile[street]"
+                                               value="{{$personProfile->street}}"
+                                               type="text" class="form-control" required
+                                            {{ $personProfile->approval_status === 1 ||
+                                            $personProfile->approval_status === 2 ? 'readonly' : '' }}>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-lg-3">
+                                    <div class="form-group">
+                                        <label class="text-primary">Tipo</label>
+                                        <select name="UserPersonProfile[address_place_type]"
+                                                required
+                                                class="custom-select {{ $personProfile->approval_status === 1 ||
+                                                        $personProfile->approval_status === 2 ? '__disabled_select' : '' }}">
+                                            <option value="Casa"
+                                                {{ $personProfile->address_place_type === 'Casa' ? 'selected':''}}
+                                            >Casa
+                                            </option>
+                                            <option value="Edificio"
+                                                {{ $personProfile->address_place_type === 'Edificio' ? 'selected':''}}
+                                            >Edificio
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-lg-2">
+                                    <div class="form-group">
+                                        <label class="text-primary">Planta / Piso</label>
+                                        <input type="text"
+                                               required
+                                               value="{{$personProfile->address_floor}}"
+                                               name="UserPersonProfile[address_floor]"
+                                               class="form-control"
+                                               placeholder="Escribe..."
+                                            {{ $personProfile->approval_status === 1 ||
+                                            $personProfile->approval_status === 2 ? 'readonly' : '' }}>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-lg-2">
+                                    <div class="form-group">
+                                        <label class="text-primary">No. Habitación</label>
+                                        <input type="text"
+                                               required
+                                               value="{{$personProfile->address_place_number}}"
+                                               name="UserPersonProfile[address_place_number]"
+                                               class="form-control"
+                                               placeholder="Escribe..."
+                                            {{ $personProfile->approval_status === 1 ||
+                                            $personProfile->approval_status === 2 ? 'readonly' : '' }}>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center text-md-right mt-4">
+                                <button class="btn btn-secondary btn-pill mb-3 px-3 px-md-4">Guardar cambios</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <form action="{{URL::to('/user-info')}}"
+                      enctype="multipart/form-data"
+                      method="post"
+                      class="px-lg-5"
+                      style="display: none"
+                      id="__personal_id_data_tab">
+                    {{ csrf_field() }}
+                    <input type="hidden" class="form-control"
+                           value="{{$personProfile->id}}"
+                           name="UserPersonProfile[id]">
+                    <input type="hidden" class="form-control"
+                           value="{{Auth::user()->id}}"
+                           name="User[id]">
+                    <h6 class="text-primary font-weight-bold mb-3">Verificación de identidad</h6>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="text-primary">Tipo de documento</label>
+                                        <select name="UserPersonProfile[id_type]"
+                                                required
+                                                class="custom-select {{ $personProfile->approval_status === 1 ||
+                                                        $personProfile->approval_status === 2 ? '__disabled_select' : '' }}">
+                                            <option> -- Seleccione una opción --</option>
+                                            <option value="Cédula"
+                                                {{ $personProfile->id_type === 'Cédula' ? 'selected':''}}
+                                            >Cédula
+                                            </option>
+                                            <option value="Licencia de conducir"
+                                                {{ $personProfile->id_type === 'Licencia de conducir' ? 'selected':''}}
+                                            >Licencia de conducir
+                                            </option>
+                                            <option value="Pasaporte"
+                                                {{ $personProfile->id_type === 'Pasaporte' ? 'selected':''}}
+                                            >Pasaporte
+                                            </option>
+                                            <option value="Permiso de trabajo"
+                                                {{ $personProfile->id_type === 'Permiso de trabajo' ? 'selected':''}}
+                                            >Permiso de trabajo
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="text-primary">Número de documento</label>
+                                        <input type="text" class="form-control"
+                                               name="UserPersonProfile[id_number]"
+                                               value="{{$personProfile->id_number}}"
+                                               required
+                                               placeholder="Escribe..."
+                                            {{ $personProfile->approval_status === 1 ||
+                                         $personProfile->approval_status === 2 ? 'readonly' : '' }}>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="text-primary">Fecha de emisión</label>
+                                        @php
+                                            $idCreationDate = $personProfile->id_creation_date ?
+                                                    Carbon::createFromFormat(
+                                                        'Y-m-d H:i:s',
+                                                        $personProfile->id_creation_date
+                                                    )->format('Y-m-d') : ''
+                                        @endphp
+                                        <input type="date" class="form-control"
+                                               name="UserPersonProfile[id_creation_date]"
+                                               value="{{$idCreationDate}}"
+                                               required
+                                               placeholder="Escribe..."
+                                            {{ $personProfile->approval_status === 1 ||
+                                            $personProfile->approval_status === 2 ? 'readonly' : '' }}>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label class="text-primary">Fecha de caducidad</label>
+                                        @php
+                                            $idExpirationDate = $personProfile->id_expiration_date ?
+                                                    Carbon::createFromFormat(
+                                                        'Y-m-d H:i:s',
+                                                        $personProfile->id_expiration_date
+                                                    )->format('Y-m-d') : ''
+                                        @endphp
+                                        <input type="date" class="form-control"
+                                               value="{{$idExpirationDate}}"
+                                               name="UserPersonProfile[id_expiration_date]"
+                                               placeholder="Escribe..."
+                                            {{ $personProfile->approval_status === 1 ||
+                                            $personProfile->approval_status === 2 ? 'readonly' : '' }}>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-md-6 __big_id">
+                                    <div class="body-bg-color p-4 rounded-lg mb-3">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div
+                                                    class="d-flex flex-row flex-md-column justify-content-center align-items-md-center text-md-center">
+                                                    <div
+                                                        class="__image_label mb-2 avatar-square-fluid avatar-background mr-3 mr-md-0 mb-md-3"
+                                                        style="padding: 0; min-height: 209px">
+                                                        @if ($personProfile->selfie_id === null)
+                                                            <img src="/img/landing/id_fact.svg"
+                                                                 alt="Prueba de identidad"
+                                                                 class="img-fluid"
+                                                                 style="max-height: 209px"
+                                                                 id="__selfie_id_img">
+                                                        @else
+                                                            <img src="{{$personProfile->selfie_id}}"
+                                                                 alt="Upload selfie with ID"
+                                                                 class="img-fluid"
+                                                                 style="max-height: 209px"
+                                                                 style="max-height: 185px"
+                                                                 id="__selfie_id_img">
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 my-auto">
+                                                <div class="text-center">
+                                                    <span>Prueba de Identidad</span>
+                                                    @if(($personProfile->approval_status !== 1 &&
+                                                                    $personProfile->approval_status !== 2) ||
+                                                                    $personProfile->selfie_id === null)
+                                                        <a href="#"
+                                                           class="btn btn-light btn-sm"
+                                                           data-toggle="modal"
+                                                           data-target="#upload-identity">
+                                                            Cargar foto
+                                                        </a>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        @if(($personProfile->approval_status !== 1 &&
+                                                    $personProfile->approval_status !== 2) ||
+                                                    $personProfile->selfie_id === null)
+                                            <!-- Identity proof modal -->
+                                                <div class="modal fade"
+                                                     id="upload-identity"
+                                                     tabindex="-1"
+                                                     role="dialog"
+                                                     aria-labelledby="verify-identity-modal"
+                                                     aria-hidden="true">
+                                                    <div class="modal-dialog modal-lg modal-dialog-centered"
+                                                         role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h6 class="modal-title text-primary"
+                                                                    id="verify-identity-modal">
+                                                                    Cargar prueba de identidad
+                                                                </h6>
+                                                                <button type="button" class="close" data-dismiss="modal"
+                                                                        aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body pb-4">
+                                                                <div class="row">
+                                                                    <div class="col-md-8">
+                                                                        <div class="body-bg-color p-3 rounded-lg mb-3">
+                                                                            <h6 class="text-primary">Ten en cuenta esto
+                                                                                cuando cargues tu foto de identidad</h6>
+                                                                            <ul class="text-primary font-14 lh-125 mb-0">
+                                                                                <li>Imite la postura de la ilustración a
+                                                                                    la derecha.
+                                                                                </li>
+                                                                                <li>No usar sombrero ni nada que te
+                                                                                    cubra la cabeza.
+                                                                                </li>
+                                                                                <li>No usar lentes.</li>
+                                                                                <li>Mostrar el rostro completo.</li>
+                                                                                <li>Debe ser reciente.</li>
+                                                                                <li>No debe estar pixelada.</li>
+                                                                                <li>No debe estar borrosa.</li>
+                                                                            </ul>
+                                                                        </div>
+
+                                                                        <div
+                                                                            class="alert alert-info font-14 lh-125 mb-3">
+                                                                            <div class="media">
+                                                                                <img src="/img/landing/info-icon.svg"
+                                                                                     class="alert-icon mr-3">
+                                                                                <div class="media-body">
+                                                                                    <h6 class="alert-heading font-weight-bold">
+                                                                                        En la fotografía debe aparecer:
+                                                                                    </h6>
+                                                                                    Tú, el documento de identificación,
+                                                                                    y un papel escrito a mano donde
+                                                                                    aparezca la fecha del día, tu nombre
+                                                                                    y "Solo para ser utilizado por
+                                                                                    American KRyptos Bank".
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div
+                                                                            class="alert alert-warning font-14 lh-125 mb-0">
+                                                                            <div class="media">
+                                                                                <img src="/img/landing/warning-icon.svg"
+                                                                                     class="alert-icon mr-3">
+                                                                                <div class="media-body">
+                                                                                    Estos aspectos serán tomados en
+                                                                                    cuenta
+                                                                                    por el equipo de revisión y
+                                                                                    verificación
+                                                                                    a la hora de abrir tu cuenta con
+                                                                                    nosotros.
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="col-md-4">
+                                                                        <div
+                                                                            class="d-flex flex-row flex-md-column justify-content-start align-items-md-center text-md-center mt-4 mt-md-0">
+                                                                            <h6 class="font-14">Prueba de identidad</h6>
+                                                                            <div
+                                                                                class="avatar-square-fluid avatar-background mr-3 mr-md-0 mb-md-3"
+                                                                                style="min-height: 238px; padding: 0">
+                                                                                <img src="/img/landing/id_fact.svg"
+                                                                                     alt="Prueba de identidad"
+                                                                                     class="img-fluid"
+                                                                                     style="height: 100%; max-height: 238px"
+                                                                                     id="__selfie_id_img_too">
+                                                                            </div>
+                                                                            <div class="font-12 text-muted">
+                                                                                Tamaño máximo 4mb.
+                                                                            </div>
+                                                                            <div class="flex-grow-1 mt-2">
+                                                                                <label class="btn btn-light btn-sm">
+                                                                                    Cargar foto
+                                                                                    <input type="file"
+                                                                                           class="form-control"
+                                                                                           id="__selfie_id_input"
+                                                                                           accept="image/*"
+                                                                                           style="width: 0; height: 0; padding: 0;"
+                                                                                           value="{{$personProfile->selfie_id}}"
+                                                                                           name="UserPersonProfile[selfie_id]"
+                                                                                           @if ($personProfile->selfie_id === null)
+                                                                                           required
+                                                                                        @endif>
+                                                                                </label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div
+                                                                class="modal-footer justify-content-between justify-content-md-end">
+                                                                <a href="#" type="button"
+                                                                   class="btn btn-link text-muted btn-pill btn-sm px-3"
+                                                                   style="color: #b3b3b3 !important"
+                                                                   data-dismiss="modal">
+                                                                    Cancelar
+                                                                </a>
+                                                                <a href="#" type="button"
+                                                                   class="btn btn-primary btn-pill btn-sm px-3"
+                                                                   data-dismiss="modal">
+                                                                    Guardar cambios
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 __big_id">
+                                    <div class="body-bg-color p-4 rounded-lg mb-3">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div
+                                                    class="d-flex flex-row flex-md-column justify-content-center align-items-md-center text-md-center">
+                                                    <div
+                                                        class="avatar-square-fluid avatar-background mr-3 mr-md-0 mb-md-3 __image_label __v_center mb-2"
+                                                        style="padding: 0; min-height: 209px">
+                                                        @if ($personProfile->id_confirmation === null)
+                                                            <img src="/img/landing/id_f_b.svg"
+                                                                 alt="Documento de identidad"
+                                                                 class="img-fluid"
+                                                                 style="max-height: 209px"
+                                                                 id="__id_img">
+                                                        @else
+                                                            <img src="{{$personProfile->id_confirmation}}"
+                                                                 alt="Upload ID"
+                                                                 class="img-fluid"
+                                                                 style="max-height: 209px"
+                                                                 style="max-height: 185px"
+                                                                 id="__id_img">
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 my-auto">
+                                                <span>Documento de Identidad</span>
+                                                @if(($personProfile->approval_status !== 1 &&
+                                                                $personProfile->approval_status !== 2) ||
+                                                                $personProfile->id_confirmation === null)
+
+                                                    <a href="#"
+                                                       class="btn btn-light btn-sm"
+                                                       data-toggle="modal"
+                                                       data-target="#upload-identity-doc">
+                                                        Cargar foto
+                                                    </a>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                @if(($personProfile->approval_status !== 1 &&
+                                            $personProfile->approval_status !== 2) ||
+                                            $personProfile->id_confirmation === null)
+                                    <!-- Identity document modal -->
+                                        <div class="modal fade" id="upload-identity-doc" tabindex="-1" role="dialog"
+                                             aria-labelledby="verify-identityDoc-modal" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h6 class="modal-title text-primary"
+                                                            id="verify-identityDoc-modal">Cargar documento de
+                                                            identidad</h6>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body pb-4">
+                                                        <div class="row">
+                                                            <div class="col-md-8">
+                                                                <div class="body-bg-color p-3 rounded-lg mb-3">
+                                                                    <h6 class="text-primary">
+                                                                        Ten en cuenta esto cuando cargues tu foto de
+                                                                        identidad
+                                                                    </h6>
+                                                                    <ul class="text-primary font-14 lh-125 mb-0">
+                                                                        <li>No debe estar pixelada.</li>
+                                                                        <li>No debe estar borrosa.</li>
+                                                                        <li>El documento debe estar vigente.</li>
+                                                                        <li>Debe estar relacionado con el país
+                                                                            seleccionado
+                                                                        </li>
+                                                                        <li>Se admiten cédulas, pasaportes o licencias
+                                                                            de conducir (Solo USA)
+                                                                        </li>
+                                                                    </ul>
+{{--                                                                    <div--}}
+{{--                                                                        class="text-primary font-14 mt-3 font-weight-bold">--}}
+{{--                                                                        Se debe cargar la fotografía del frente y del--}}
+{{--                                                                        respaldo de documento de identificación.--}}
+{{--                                                                    </div>--}}
+                                                                </div>
+                                                                <div class="alert alert-warning font-14 lh-125 mb-0">
+                                                                    <div class="media">
+                                                                        <img src="/img/landing/warning-icon.svg"
+                                                                             class="alert-icon mr-3">
+                                                                        <div class="media-body">
+                                                                            Estos aspectos serán tomados en cuenta por
+                                                                            el equipo de revisión y verificación
+                                                                            a la hora de abrir tu cuenta con nosotros.
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <div
+                                                                    class="d-flex flex-row flex-md-column justify-content-start align-items-md-center text-md-center mt-4 mt-md-0">
+                                                                    <div
+                                                                        class="avatar-square-fluid avatar-background mr-3 mr-md-0 mb-md-3"
+                                                                        style="padding: 0; min-height: 238px">
+                                                                        <img src="/img/landing/id_f_b.svg"
+                                                                             alt="Documento de identidad"
+                                                                             class="img-fluid"
+                                                                             style="height: 100%; max-height: 238px"
+                                                                             id="__id_img_too">
+                                                                    </div>
+                                                                    <div class="flex-grow-1 mt-2">
+                                                                        <h6 class="font-14">Documento de identidad</h6>
+                                                                        <div class="font-12 text-muted">Tamaño máximo
+                                                                            4mb.
+                                                                        </div>
+                                                                        <label class="btn btn-light btn-sm rounded-0">
+                                                                            Cargar foto
+                                                                            <input type="file"
+                                                                                   class="form-control"
+                                                                                   id="__id_input"
+                                                                                   accept="image/*"
+                                                                                   style="display: none;"
+                                                                                   value="{{$personProfile->id_confirmation}}"
+                                                                                   name="UserPersonProfile[id_confirmation]"
+                                                                                   @if ($personProfile->id_confirmation === null)
+                                                                                   required
+                                                                                @endif>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div
+                                                        class="modal-footer justify-content-between justify-content-md-end">
+                                                        <a href="#" type="button"
+                                                           class="btn btn-link text-muted btn-pill btn-sm px-3"
+                                                           style="color: #b3b3b3 !important"
+                                                           data-dismiss="modal">
+                                                            Cancelar
+                                                        </a>
+                                                        <a href="#" type="button"
+                                                           class="btn btn-primary btn-pill btn-sm px-3"
+                                                           data-dismiss="modal">
+                                                            Guardar cambios
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="text-center text-md-right mt-4">
+                                <button class="btn btn-secondary btn-pill px-3 px-md-4">Guardar cambios</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- Verify phone number modal -->
+    <div class="modal fade" id="verify-phone" tabindex="-1" role="dialog" aria-labelledby="verify-phone-modal"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title text-primary" id="verify-phone-modal">Verificación de tu celular</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="bg-primary text-center text-white p-4">
+                    <svg class="mb-3" width="135" height="94" viewBox="0 0 135 94" fill="none"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M51.6611 41.4677C48.9655 35.4133 51.6884 28.32 57.7428 25.6243L104.334 4.88078C110.388 2.18517 117.481 4.90804 120.177 10.9625L129.125 31.0605C131.821 37.1149 129.098 44.2083 123.044 46.9039L76.4527 67.6474C70.3983 70.3431 63.3049 67.6202 60.6093 61.5657L51.6611 41.4677Z"
+                            fill="#FFE37B"></path>
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                              d="M105.554 7.62142L58.963 28.365C54.4222 30.3867 52.38 35.7067 54.4017 40.2475L63.35 60.3455C65.3717 64.8864 70.6917 66.9285 75.2325 64.9068L121.823 44.1632C126.364 42.1415 128.406 36.8215 126.385 32.2807L117.436 12.1827C115.415 7.64186 110.095 5.59971 105.554 7.62142ZM57.7428 25.6243C51.6884 28.32 48.9655 35.4133 51.6611 41.4677L60.6093 61.5657C63.3049 67.6202 70.3983 70.3431 76.4527 67.6474L123.044 46.9039C129.098 44.2083 131.821 37.1149 129.125 31.0605L120.177 10.9625C117.481 4.90804 110.388 2.18517 104.334 4.88078L57.7428 25.6243Z"
+                              fill="#FFBE1B"></path>
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                              d="M62.419 34.1252C62.5585 33.3086 63.3335 32.7597 64.1501 32.8991L90.9309 37.4721L105.452 14.5102C105.895 13.81 106.822 13.6014 107.522 14.0442C108.222 14.487 108.431 15.4135 107.988 16.1137L92.3974 40.7659L63.6451 35.8563C62.8285 35.7169 62.2796 34.9419 62.419 34.1252Z"
+                              fill="#FFBE1B"></path>
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                              d="M85.0623 37.049C85.8357 37.3459 86.222 38.2135 85.9251 38.9869L79.59 55.4905C79.2931 56.2639 78.4255 56.6502 77.6521 56.3533C76.8787 56.0564 76.4924 55.1888 76.7893 54.4154L83.1244 37.9118C83.4213 37.1384 84.2889 36.7521 85.0623 37.049Z"
+                              fill="#FFBE1B"></path>
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                              d="M94.5436 32.8276C94.2468 33.601 94.633 34.4687 95.4065 34.7655L111.91 41.1006C112.683 41.3975 113.551 41.0112 113.848 40.2378C114.145 39.4644 113.758 38.5968 112.985 38.2999L96.4816 31.9648C95.7082 31.6679 94.8405 32.0542 94.5436 32.8276Z"
+                              fill="#FFBE1B"></path>
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                              d="M3.8501 59.4707C3.62546 58.9661 3.85237 58.375 4.3569 58.1504L39.0716 42.6944C39.5762 42.4698 40.1673 42.6967 40.3919 43.2012C40.6165 43.7057 40.3896 44.2969 39.8851 44.5215L5.17038 59.9775C4.66584 60.2021 4.07473 59.9752 3.8501 59.4707Z"
+                              fill="#6857E5"></path>
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                              d="M17.8662 66.3659C17.6416 65.8613 17.8685 65.2702 18.373 65.0456L43.9523 53.657C44.4568 53.4323 45.0479 53.6592 45.2726 54.1638C45.4972 54.6683 45.2703 55.2594 44.7658 55.4841L19.1865 66.8727C18.682 67.0973 18.0908 66.8704 17.8662 66.3659Z"
+                              fill="#6857E5"></path>
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                              d="M30.0557 74.0745C29.831 73.57 30.0579 72.9788 30.5625 72.7542L48.8334 64.6195C49.3379 64.3948 49.929 64.6217 50.1537 65.1263C50.3783 65.6308 50.1514 66.2219 49.6469 66.4466L31.3759 74.5813C30.8714 74.8059 30.2803 74.579 30.0557 74.0745Z"
+                              fill="#6857E5"></path>
+                    </svg>
+                    <p class="mb-1">En unos segundos reicibirás un mensaje de texto con un código</p>
+                </div>
+                <div class="modal-body pt-4">
+                    <!-- <p class="text-primary">Ingresa el código que te hemos enviado</p> -->
+
+                    <!-- show this alert after phone verification -->
+                    <div class="alert alert-success lh-125 mb-3"
+                         id="__successful_verify"
+                         style="display: none">
+                        <div class="media">
+                            <img src="/img/landing/success-icon.svg" class="alert-icon mr-3">
+                            <div class="media-body">¡Tu número telofónico ha sido verificado exitosamente!</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label for="__verification_code_input">Ingresa el código que te hemos enviado</label>
+                        <div class="d-flex flex-column">
+                            <input id="__verification_code_input"
+                                   type="text"
+                                   class="form-control form-control-lg text-center font-weight-bold"
+                                   style="letter-spacing: 5px">
+                            <button class="btn btn-outline-success px-4 mt-2"
+                                    id="__verify_code">
+                                Verificar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="alert alert-info font-14 lh-125 mb-0">
+                        <div class="media">
+                            <img src="/img/landing/info-icon.svg" class="alert-icon mr-3">
+                            <div class="media-body">
+                                Recuerda que este número de celular se usará en tu cuenta personal, para hacer cambios
+                                deberás <a href="/contact" class="alert-link">contactar</a> con nuestro equipo.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light btn-pill btn-block btn-sm px-3" data-dismiss="modal">
+                        Listo
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+@endsection

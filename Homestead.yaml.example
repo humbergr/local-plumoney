@@ -1,0 +1,22 @@
+ip: 192.168.10.10
+memory: 2048
+cpus: 1
+provider: virtualbox
+authorize: ~/.ssh/admin.pub
+keys:
+    - ~/.ssh/admin
+folders:
+    -
+        map: /home/isalcedo/Server/pj-plumoney/LocalBC/local-plumoney
+        to: /home/vagrant/code
+    -
+        map: /home/isalcedo/Server/pj-plumoney/Song
+        to: /home/vagrant/song
+sites:
+    -
+        map: homestead.test
+        to: /home/vagrant/code/public
+databases:
+    - homestead
+name: local-plumoney
+hostname: local-plumoney

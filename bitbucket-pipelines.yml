@@ -1,0 +1,29 @@
+# This is a sample build configuration for PHP.
+# Check our guides at https://confluence.atlassian.com/x/e8YWN for more examples.
+# Only use spaces to indent your .yml configuration.
+# -----
+
+# Specify a docker image from Docker Hub as your build environment.
+# All of your pipeline scripts will be executed within this docker image.
+# All of your Pipelines will be defined in the `pipelines` section.
+# You can have any number of Pipelines, but they must all have unique
+# names. The default Pipeline is simply named `default`.
+
+pipelines:
+  branches:
+    testing:
+      - step:
+          name: Build
+          script:
+            - git archive --format=tar.gz testing -o akbTesting.tar.gz
+          artifacts:
+            - akbTesting.tar.gz
+      - step:
+          name: Deploy to staging
+          deployment: staging
+          script:
+            - pipe: atlassian/heroku-deploy:1.1.4
+              variables:
+                HEROKU_API_KEY: $HEROKU_API_KEY
+                HEROKU_APP_NAME: $HEROKU_APP_NAME
+                ZIP_FILE: akbTesting.tar.gz

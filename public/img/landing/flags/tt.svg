@@ -1,0 +1,676 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   version="1.1"
+   viewBox="0 0 640 480"
+   id="flag-icon-css-ve">
+  <metadata
+     id="metadata35">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs14">
+    <g
+       transform="translate(0 -36)"
+       id="d">
+      <g
+         id="c">
+        <g
+           id="b">
+          <path
+             d="M0-5L-1.5-.2l2.8.9z"
+             fill="#fff"
+             id="a" />
+          <use
+             id="use3"
+             xlink:href="#a"
+             transform="scale(-1 1)"
+             height="120"
+             width="180" />
+        </g>
+        <use
+           id="use6"
+           xlink:href="#b"
+           transform="rotate(72)"
+           height="120"
+           width="180" />
+      </g>
+      <use
+         id="use9"
+         xlink:href="#b"
+         transform="rotate(-72)"
+         height="120"
+         width="180" />
+      <use
+         id="use11"
+         xlink:href="#c"
+         transform="rotate(144)"
+         height="120"
+         width="180" />
+    </g>
+    <linearGradient
+       id="grad1"
+       y2="277.58"
+       gradientUnits="userSpaceOnUse"
+       x2="601.38"
+       gradientTransform="matrix(1.146366,0,0,1.1711652,33.178489,82.1384)"
+       y1="342.3"
+       x1="597.92">
+      <stop
+         stop-color="#fff"
+         offset="0"
+         id="stop37" />
+      <stop
+         stop-color="#1ea8d1"
+         offset="1"
+         id="stop39" />
+    </linearGradient>
+    <linearGradient
+       id="grad2"
+       y2="399.5"
+       gradientUnits="userSpaceOnUse"
+       x2="600.31"
+       gradientTransform="matrix(1.146366,0,0,1.1711652,33.178489,82.1384)"
+       y1="326.43"
+       x1="599.96">
+      <stop
+         stop-color="#FFF"
+         offset="0"
+         id="stop42" />
+      <stop
+         stop-color="#c1d3e8"
+         offset="0.1312"
+         id="stop44" />
+      <stop
+         stop-color="#88b0d5"
+         offset="0.2994"
+         id="stop46" />
+      <stop
+         stop-color="#5998c6"
+         offset="0.4634"
+         id="stop48" />
+      <stop
+         stop-color="#2c87bc"
+         offset="0.6191"
+         id="stop50" />
+      <stop
+         stop-color="#007db5"
+         offset="0.7645"
+         id="stop52" />
+      <stop
+         stop-color="#0077b0"
+         offset="0.8956"
+         id="stop54" />
+      <stop
+         stop-color="#0075af"
+         offset="1"
+         id="stop56" />
+    </linearGradient>
+  </defs>
+  <g
+     transform="translate(-764.47458,99.932699)"
+     id="g10622">
+</g>
+  <g
+     transform="translate(-764.47458,99.932699)"
+     id="g10624">
+</g>
+  <g
+     transform="translate(-764.47458,99.932699)"
+     id="g10626">
+</g>
+  <g
+     transform="translate(-764.47458,99.932699)"
+     id="g10628">
+</g>
+  <g
+     transform="translate(-764.47458,99.932699)"
+     id="g10630">
+</g>
+  <g
+     transform="translate(-764.47458,99.932699)"
+     id="g10632">
+</g>
+  <g
+     transform="translate(-764.47458,99.932699)"
+     id="g10634">
+</g>
+  <g
+     transform="translate(-764.47458,99.932699)"
+     id="g10636">
+</g>
+  <g
+     transform="translate(-764.47458,99.932699)"
+     id="g10638">
+</g>
+  <g
+     transform="translate(-764.47458,99.932699)"
+     id="g10640">
+</g>
+  <g
+     transform="translate(-764.47458,99.932699)"
+     id="g10642">
+</g>
+  <g
+     transform="translate(-764.47458,99.932699)"
+     id="g10644">
+</g>
+  <g
+     transform="translate(-764.47458,99.932699)"
+     id="g10646">
+</g>
+  <g
+     transform="translate(-764.47458,99.932699)"
+     id="g10648">
+</g>
+  <g
+     transform="translate(-764.47458,99.932699)"
+     id="g10650">
+</g>
+  <g
+     transform="translate(-658.71186,-83.118636)"
+     id="g11061">
+</g>
+  <g
+     transform="translate(-658.71186,-83.118636)"
+     id="g11063">
+</g>
+  <g
+     transform="translate(-658.71186,-83.118636)"
+     id="g11065">
+</g>
+  <g
+     transform="translate(-658.71186,-83.118636)"
+     id="g11067">
+</g>
+  <g
+     transform="translate(-658.71186,-83.118636)"
+     id="g11069">
+</g>
+  <g
+     transform="translate(-658.71186,-83.118636)"
+     id="g11071">
+</g>
+  <g
+     transform="translate(-658.71186,-83.118636)"
+     id="g11073">
+</g>
+  <g
+     transform="translate(-658.71186,-83.118636)"
+     id="g11075">
+</g>
+  <g
+     transform="translate(-658.71186,-83.118636)"
+     id="g11077">
+</g>
+  <g
+     transform="translate(-658.71186,-83.118636)"
+     id="g11079">
+</g>
+  <g
+     transform="translate(-658.71186,-83.118636)"
+     id="g11081">
+</g>
+  <g
+     transform="translate(-658.71186,-83.118636)"
+     id="g11083">
+</g>
+  <g
+     transform="translate(-658.71186,-83.118636)"
+     id="g11085">
+</g>
+  <g
+     transform="translate(-658.71186,-83.118636)"
+     id="g11087">
+</g>
+  <g
+     transform="translate(-658.71186,-83.118636)"
+     id="g11089">
+</g>
+  <g
+     transform="translate(-717.69492,-81.084738)"
+     id="g11579">
+</g>
+  <g
+     transform="translate(-717.69492,-81.084738)"
+     id="g11581">
+</g>
+  <g
+     transform="translate(-717.69492,-81.084738)"
+     id="g11583">
+</g>
+  <g
+     transform="translate(-717.69492,-81.084738)"
+     id="g11585">
+</g>
+  <g
+     transform="translate(-717.69492,-81.084738)"
+     id="g11587">
+</g>
+  <g
+     transform="translate(-717.69492,-81.084738)"
+     id="g11589">
+</g>
+  <g
+     transform="translate(-717.69492,-81.084738)"
+     id="g11591">
+</g>
+  <g
+     transform="translate(-717.69492,-81.084738)"
+     id="g11593">
+</g>
+  <g
+     transform="translate(-717.69492,-81.084738)"
+     id="g11595">
+</g>
+  <g
+     transform="translate(-717.69492,-81.084738)"
+     id="g11597">
+</g>
+  <g
+     transform="translate(-717.69492,-81.084738)"
+     id="g11599">
+</g>
+  <g
+     transform="translate(-717.69492,-81.084738)"
+     id="g11601">
+</g>
+  <g
+     transform="translate(-717.69492,-81.084738)"
+     id="g11603">
+</g>
+  <g
+     transform="translate(-717.69492,-81.084738)"
+     id="g11605">
+</g>
+  <g
+     transform="translate(-717.69492,-81.084738)"
+     id="g11607">
+</g>
+  <g
+     transform="translate(-786.84746,61.288143)"
+     id="g11832">
+</g>
+  <g
+     transform="translate(-786.84746,61.288143)"
+     id="g11834">
+</g>
+  <g
+     transform="translate(-786.84746,61.288143)"
+     id="g11836">
+</g>
+  <g
+     transform="translate(-786.84746,61.288143)"
+     id="g11838">
+</g>
+  <g
+     transform="translate(-786.84746,61.288143)"
+     id="g11840">
+</g>
+  <g
+     transform="translate(-786.84746,61.288143)"
+     id="g11842">
+</g>
+  <g
+     transform="translate(-786.84746,61.288143)"
+     id="g11844">
+</g>
+  <g
+     transform="translate(-786.84746,61.288143)"
+     id="g11846">
+</g>
+  <g
+     transform="translate(-786.84746,61.288143)"
+     id="g11848">
+</g>
+  <g
+     transform="translate(-786.84746,61.288143)"
+     id="g11850">
+</g>
+  <g
+     transform="translate(-786.84746,61.288143)"
+     id="g11852">
+</g>
+  <g
+     transform="translate(-786.84746,61.288143)"
+     id="g11854">
+</g>
+  <g
+     transform="translate(-786.84746,61.288143)"
+     id="g11856">
+</g>
+  <g
+     transform="translate(-786.84746,61.288143)"
+     id="g11858">
+</g>
+  <g
+     transform="translate(-786.84746,61.288143)"
+     id="g11860">
+</g>
+  <g
+     transform="matrix(0.93749087,0,0,0.93749087,-780.74857,64.816052)"
+     id="g12471">
+</g>
+  <g
+     transform="matrix(0.93749087,0,0,0.93749087,-780.74857,64.816052)"
+     id="g12473">
+</g>
+  <g
+     transform="matrix(0.93749087,0,0,0.93749087,-780.74857,64.816052)"
+     id="g12475">
+</g>
+  <g
+     transform="matrix(0.93749087,0,0,0.93749087,-780.74857,64.816052)"
+     id="g12477">
+</g>
+  <g
+     transform="matrix(0.93749087,0,0,0.93749087,-780.74857,64.816052)"
+     id="g12479">
+</g>
+  <g
+     transform="matrix(0.93749087,0,0,0.93749087,-780.74857,64.816052)"
+     id="g12481">
+</g>
+  <g
+     transform="matrix(0.93749087,0,0,0.93749087,-780.74857,64.816052)"
+     id="g12483">
+</g>
+  <g
+     transform="matrix(0.93749087,0,0,0.93749087,-780.74857,64.816052)"
+     id="g12485">
+</g>
+  <g
+     transform="matrix(0.93749087,0,0,0.93749087,-780.74857,64.816052)"
+     id="g12487">
+</g>
+  <g
+     transform="matrix(0.93749087,0,0,0.93749087,-780.74857,64.816052)"
+     id="g12489">
+</g>
+  <g
+     transform="matrix(0.93749087,0,0,0.93749087,-780.74857,64.816052)"
+     id="g12491">
+</g>
+  <g
+     transform="matrix(0.93749087,0,0,0.93749087,-780.74857,64.816052)"
+     id="g12493">
+</g>
+  <g
+     transform="matrix(0.93749087,0,0,0.93749087,-780.74857,64.816052)"
+     id="g12495">
+</g>
+  <g
+     transform="matrix(0.93749087,0,0,0.93749087,-780.74857,64.816052)"
+     id="g12497">
+</g>
+  <g
+     transform="matrix(0.93749087,0,0,0.93749087,-780.74857,64.816052)"
+     id="g12499">
+</g>
+  <g
+     transform="matrix(0.93749999,0,0,0.93749999,-768.54237,74.983055)"
+     id="g13350">
+</g>
+  <g
+     transform="matrix(0.93749999,0,0,0.93749999,-768.54237,74.983055)"
+     id="g13352">
+</g>
+  <g
+     transform="matrix(0.93749999,0,0,0.93749999,-768.54237,74.983055)"
+     id="g13354">
+</g>
+  <g
+     transform="matrix(0.93749999,0,0,0.93749999,-768.54237,74.983055)"
+     id="g13356">
+</g>
+  <g
+     transform="matrix(0.93749999,0,0,0.93749999,-768.54237,74.983055)"
+     id="g13358">
+</g>
+  <g
+     transform="matrix(0.93749999,0,0,0.93749999,-768.54237,74.983055)"
+     id="g13360">
+</g>
+  <g
+     transform="matrix(0.93749999,0,0,0.93749999,-768.54237,74.983055)"
+     id="g13362">
+</g>
+  <g
+     transform="matrix(0.93749999,0,0,0.93749999,-768.54237,74.983055)"
+     id="g13364">
+</g>
+  <g
+     transform="matrix(0.93749999,0,0,0.93749999,-768.54237,74.983055)"
+     id="g13366">
+</g>
+  <g
+     transform="matrix(0.93749999,0,0,0.93749999,-768.54237,74.983055)"
+     id="g13368">
+</g>
+  <g
+     transform="matrix(0.93749999,0,0,0.93749999,-768.54237,74.983055)"
+     id="g13370">
+</g>
+  <g
+     transform="matrix(0.93749999,0,0,0.93749999,-768.54237,74.983055)"
+     id="g13372">
+</g>
+  <g
+     transform="matrix(0.93749999,0,0,0.93749999,-768.54237,74.983055)"
+     id="g13374">
+</g>
+  <g
+     transform="matrix(0.93749999,0,0,0.93749999,-768.54237,74.983055)"
+     id="g13376">
+</g>
+  <g
+     transform="matrix(0.93749999,0,0,0.93749999,-768.54237,74.983055)"
+     id="g13378">
+</g>
+  <g
+     transform="matrix(0.9375,0,0,0.9375,-648.54237,36.338983)"
+     id="g13476">
+</g>
+  <g
+     transform="matrix(0.9375,0,0,0.9375,-648.54237,36.338983)"
+     id="g13478">
+</g>
+  <g
+     transform="matrix(0.9375,0,0,0.9375,-648.54237,36.338983)"
+     id="g13480">
+</g>
+  <g
+     transform="matrix(0.9375,0,0,0.9375,-648.54237,36.338983)"
+     id="g13482">
+</g>
+  <g
+     transform="matrix(0.9375,0,0,0.9375,-648.54237,36.338983)"
+     id="g13484">
+</g>
+  <g
+     transform="matrix(0.9375,0,0,0.9375,-648.54237,36.338983)"
+     id="g13486">
+</g>
+  <g
+     transform="matrix(0.9375,0,0,0.9375,-648.54237,36.338983)"
+     id="g13488">
+</g>
+  <g
+     transform="matrix(0.9375,0,0,0.9375,-648.54237,36.338983)"
+     id="g13490">
+</g>
+  <g
+     transform="matrix(0.9375,0,0,0.9375,-648.54237,36.338983)"
+     id="g13492">
+</g>
+  <g
+     transform="matrix(0.9375,0,0,0.9375,-648.54237,36.338983)"
+     id="g13494">
+</g>
+  <g
+     transform="matrix(0.9375,0,0,0.9375,-648.54237,36.338983)"
+     id="g13496">
+</g>
+  <g
+     transform="matrix(0.9375,0,0,0.9375,-648.54237,36.338983)"
+     id="g13498">
+</g>
+  <g
+     transform="matrix(0.9375,0,0,0.9375,-648.54237,36.338983)"
+     id="g13500">
+</g>
+  <g
+     transform="matrix(0.9375,0,0,0.9375,-648.54237,36.338983)"
+     id="g13502">
+</g>
+  <g
+     transform="matrix(0.9375,0,0,0.9375,-648.54237,36.338983)"
+     id="g13504">
+</g>
+  <g
+     transform="matrix(0.9375,0,0,0.9375,-748.20339,-95.864416)"
+     id="g13594">
+</g>
+  <g
+     transform="matrix(0.9375,0,0,0.9375,-748.20339,-95.864416)"
+     id="g13596">
+</g>
+  <g
+     transform="matrix(0.9375,0,0,0.9375,-748.20339,-95.864416)"
+     id="g13598">
+</g>
+  <g
+     transform="matrix(0.9375,0,0,0.9375,-748.20339,-95.864416)"
+     id="g13600">
+</g>
+  <g
+     transform="matrix(0.9375,0,0,0.9375,-748.20339,-95.864416)"
+     id="g13602">
+</g>
+  <g
+     transform="matrix(0.9375,0,0,0.9375,-748.20339,-95.864416)"
+     id="g13604">
+</g>
+  <g
+     transform="matrix(0.9375,0,0,0.9375,-748.20339,-95.864416)"
+     id="g13606">
+</g>
+  <g
+     transform="matrix(0.9375,0,0,0.9375,-748.20339,-95.864416)"
+     id="g13608">
+</g>
+  <g
+     transform="matrix(0.9375,0,0,0.9375,-748.20339,-95.864416)"
+     id="g13610">
+</g>
+  <g
+     transform="matrix(0.9375,0,0,0.9375,-748.20339,-95.864416)"
+     id="g13612">
+</g>
+  <g
+     transform="matrix(0.9375,0,0,0.9375,-748.20339,-95.864416)"
+     id="g13614">
+</g>
+  <g
+     transform="matrix(0.9375,0,0,0.9375,-748.20339,-95.864416)"
+     id="g13616">
+</g>
+  <g
+     transform="matrix(0.9375,0,0,0.9375,-748.20339,-95.864416)"
+     id="g13618">
+</g>
+  <g
+     transform="matrix(0.9375,0,0,0.9375,-748.20339,-95.864416)"
+     id="g13620">
+</g>
+  <g
+     transform="matrix(0.9375,0,0,0.9375,-748.20339,-95.864416)"
+     id="g13622">
+</g>
+  <g
+     transform="scale(1.25,0.9375)"
+     id="g13766">
+    <rect
+       y="0"
+       x="0"
+       style="fill:#ff4b55"
+       width="512"
+       height="512"
+       id="rect13699" />
+    <g
+       id="g13705">
+	<polygon
+   style="fill:#f5f5f5"
+   points="388.414,512 26.483,0 0,0 361.931,512 "
+   id="polygon13701" />
+
+	<polygon
+   style="fill:#f5f5f5"
+   points="485.517,512 512,512 150.069,0 123.586,0 "
+   id="polygon13703" />
+
+</g>
+    <polygon
+       style="fill:#464655"
+       points="485.517,512 123.586,0 26.483,0 388.414,512 "
+       id="polygon13707" />
+    <g
+       id="g13709">
+</g>
+    <g
+       id="g13711">
+</g>
+    <g
+       id="g13713">
+</g>
+    <g
+       id="g13715">
+</g>
+    <g
+       id="g13717">
+</g>
+    <g
+       id="g13719">
+</g>
+    <g
+       id="g13721">
+</g>
+    <g
+       id="g13723">
+</g>
+    <g
+       id="g13725">
+</g>
+    <g
+       id="g13727">
+</g>
+    <g
+       id="g13729">
+</g>
+    <g
+       id="g13731">
+</g>
+    <g
+       id="g13733">
+</g>
+    <g
+       id="g13735">
+</g>
+    <g
+       id="g13737">
+</g>
+  </g>
+</svg>

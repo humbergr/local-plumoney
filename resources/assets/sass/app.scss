@@ -1,0 +1,28 @@
+
+
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+@import '~bootstrap-datepicker/dist/css/bootstrap-datepicker.css';
+
+@import '~magnific-popup/dist/magnific-popup.css';
+
+@import '~daterangepicker/daterangepicker.css';
+
+//bootstrap-vue
+@import '~bootstrap/scss/bootstrap';
+@import '~bootstrap-vue/src/index.scss';
+
+.navbar-laravel {
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+//Components
+@import 'AdminUsersStates';
